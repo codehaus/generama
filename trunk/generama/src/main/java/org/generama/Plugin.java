@@ -95,6 +95,9 @@ public abstract class Plugin implements Startable {
 
     public String getDestinationPackage(Object metadata) {
         String originalPackage = metadataProvider.getOriginalPackageName(metadata);
+        if(originalPackage == null) {
+            originalPackage="";
+        }
         return originalPackage.replaceAll(packageregex, packagereplace);
     }
 
