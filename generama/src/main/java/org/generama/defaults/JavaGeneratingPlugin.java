@@ -5,22 +5,15 @@ import org.generama.QDoxCapableMetadataProvider;
 import org.generama.TemplateEngine;
 import org.generama.WriterMapper;
 
-import java.util.Collection;
 
 /**
  * @author Aslak Helles&oslash;y
  * @version $Revision$
  */
-public class JavaGeneratingPlugin extends Plugin {
-    private QDoxCapableMetadataProvider metadataProvider;
-
-    protected Collection getMetadata() {
-        return metadataProvider.getMetadata();
-    }
+public class JavaGeneratingPlugin extends QDoxPlugin {
 
     protected JavaGeneratingPlugin(TemplateEngine templateEngine, QDoxCapableMetadataProvider metadataProvider, WriterMapper writerMapper) {
         super(templateEngine, metadataProvider, writerMapper);
-        this.metadataProvider = metadataProvider;
     }
 
     public String getDestinationClassname(Object metadata) {
