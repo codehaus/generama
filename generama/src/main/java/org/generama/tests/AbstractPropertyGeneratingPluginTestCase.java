@@ -2,7 +2,6 @@ package org.generama.tests;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.Reader;
 import java.util.Properties;
 import java.net.URL;
 
