@@ -1,0 +1,3 @@
+<j:jelly xmlns:j="jelly:core" xmlns:x="jelly:xml">
+<x:comment>You can replace this by putting a org/generama/tests/include.jelly relative to a classpath element</x:comment>
+</j:jelly>

@@ -1,0 +1,7 @@
+<j:jelly xmlns:j="jelly:core">
+  <test>
+    <j:forEach var="pip" items="${metadata}">
+      <number name="${pip}"/>
+    </j:forEach>
+  </test>
+</j:jelly>

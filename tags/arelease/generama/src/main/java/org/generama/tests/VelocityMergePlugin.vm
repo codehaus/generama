@@ -1,0 +1,4 @@
+#parse("org/generama/tests/include.vm")
+#foreach( $dood in ${metadata} )
+o ${dood}
+#end
