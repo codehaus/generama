@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * @author Aslak Helles&oslash;y
  * @version $Revision$
  */
-public class OneTwoThreeStringMetadataProvider implements MetadataProvider {
+public class OneTwoThreeStringMetadataProvider implements TestMetadataProvider {
     public Collection getMetadata() {
         Collection result = new ArrayList();
         result.add("One");

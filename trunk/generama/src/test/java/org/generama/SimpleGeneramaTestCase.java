@@ -7,7 +7,7 @@ import junit.framework.TestCase;
  * @author Aslak Helles&oslash;y
  * @version $Revision$
  */
-public class SimpleGeneramaTestCase extends TestCase /*AbstractGeneramaTestCase*/ {
+public class SimpleGeneramaTestCase extends TestCase {
 
     public void testDummy() {}
 

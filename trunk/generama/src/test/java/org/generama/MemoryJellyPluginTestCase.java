@@ -5,6 +5,7 @@ import org.generama.tests.AbstractXMLGeneratingPluginTestCase;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Collection;
 
 /**
  * Simple example of an AbstractXMLGeneratingPluginTestCase that uses an in-memory
@@ -34,7 +35,11 @@ public class MemoryJellyPluginTestCase extends AbstractXMLGeneratingPluginTestCa
             }
 
         };
-        return new Plugin(templateEngine, metadataProvider, writerMapper);
+        return new Plugin(templateEngine, metadataProvider, writerMapper) {
+            protected Collection getMetadata() {
+                return ((TestMetadataProvider) metadataProvider).getMetadata();
+            }
+        };
     }
 
     protected MetadataProvider createMetadataProvider() throws Exception {
