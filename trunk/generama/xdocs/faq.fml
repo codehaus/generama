@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faqs title="Frequently Asked Questions">
+
+  <part id="general">
+    <title>General</title>
+   
+    <faq id="fish">
+      <question>
+        What is Generama?
+      </question>
+      <answer>
+        <p>
+          It's a generic code generation framework based on Velocity and Jelly.
+        </p>
+      </answer>
+    </faq>
+
+    <faq id="why-not-directly">
+      <question>
+        What does it buy me over using Velocity or Jelly directly?
+      </question>
+      <answer>
+        <ul>
+          <li>No needed configuration of the said template engines.</li>
+          <li>A plugin framework.</li>
+          <li>An Ant task.</li>
+          <li>IDE plugins.</li>
+          <li>An MVC model.</li>
+        </ul>
+      </answer>
+    </faq>
+
+    <faq id="what-plugin-framework">
+      <question>
+        What's this plugin framework?
+      </question>
+      <answer>
+        <p>
+          You can for example extend VelocityPlugin and write an associated script
+          and jar them up in a jar (only two files required). Then register
+          them with Generama, and you're ready to go.
+        </p>
+      </answer>
+    </faq>
+
+    <faq id="multiple-files">
+      <question>
+        How do I descide wether or not my plugin generates multiple files?
+      </question>
+      <answer>
+        <p>
+          By calling the Plugin's setMultiOutput method.
+        </p>
+      </answer>
+    </faq>
+
+    <faq id="metadata">
+      <question>
+        How do my templates get access to metadata, like e.g. QDox JavaClass objects?
+      </question>
+      <answer>
+        <p>
+          By registering a MetadataProvider in Generama that provides the desired type
+          of objects.
+        </p>
+      </answer>
+    </faq>
+
+    <faq id="mvc">
+      <question>
+        What's this MVC thing. How do I do complicated stuff X?
+      </question>
+      <answer>
+        <p>
+          If you need advanced functinaolity that's hard to do in Velocity
+          or Jelly, you can implement the logic in your plugin class as a
+          public method. You can then call the method directly from the
+          scripts.
+        </p>
+        <p>
+          This is inspired of the MVC pattern. The script just renders the data
+          provided by the plugin (and the metadata).
+        </p>
+      </answer>
+    </faq>
+
+  </part>
+  
+  <part id="install">
+    <title>Installation</title>
+   
+    <faq id="how-install">
+      <question>
+        How do I install Generama?
+      </question>
+      <answer>
+        <p>
+          You don't. It's a library. It's meant to be used as a building block in
+          more specialised code generators like XDoclet and Middlegen.
+        </p>
+      </answer>
+    </faq>
+  </part>  
+</faqs>
