@@ -1,9 +1,7 @@
 package org.generama;
 
-import com.thoughtworks.qdox.model.DocletTagFactory;
-
-import java.util.Collection;
 import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * Very simple implementation of MetadataProvider used throughout the test suite.
@@ -28,7 +26,7 @@ public class OneTwoThreeStringMetadataProvider implements TestMetadataProvider {
         return metadata.toString();
     }
 
-    public DocletTagFactory getDocletTagFactory() {
+    public ConfigurableDocletTagFactory getDocletTagFactory() {
         return null;
     }
 }

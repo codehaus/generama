@@ -1,6 +1,6 @@
 package org.generama;
 
-import com.thoughtworks.qdox.model.DocletTagFactory;
+
 
 /**
  *
@@ -12,5 +12,5 @@ public interface MetadataProvider {
     
     String getOriginalFileName(Object metadata);
     String getOriginalPackageName(Object metadata);
-    DocletTagFactory getDocletTagFactory();
+    ConfigurableDocletTagFactory getDocletTagFactory();
 }
