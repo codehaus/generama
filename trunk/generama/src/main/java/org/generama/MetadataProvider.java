@@ -1,5 +1,7 @@
 package org.generama;
 
+import com.thoughtworks.qdox.model.DocletTagFactory;
+
 import java.util.Collection;
 
 /**
@@ -10,7 +12,8 @@ import java.util.Collection;
 public interface MetadataProvider {
     public static final String ROLE = MetadataProvider.class.getName();
     
-    Collection getMetadata();
+    Collection getMetadata() throws GeneramaException;
     String getOriginalFileName(Object metadata);
     String getOriginalPackageName(Object metadata);
+    DocletTagFactory getDocletTagFactory();
 }
