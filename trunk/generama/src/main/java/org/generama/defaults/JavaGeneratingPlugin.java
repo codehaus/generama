@@ -1,6 +1,5 @@
 package org.generama.defaults;
 
-import org.generama.Plugin;
 import org.generama.QDoxCapableMetadataProvider;
 import org.generama.TemplateEngine;
 import org.generama.WriterMapper;

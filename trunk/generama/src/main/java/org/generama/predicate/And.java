@@ -3,7 +3,6 @@ package org.generama.predicate;
 import org.apache.commons.collections.Predicate;
 
 import java.util.Iterator;
-import java.util.Collection;
 
 /**
  * @author Aslak Helles&oslash;y

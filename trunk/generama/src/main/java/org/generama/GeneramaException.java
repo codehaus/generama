@@ -1,7 +1,5 @@
 package org.generama;
 
-import org.xml.sax.SAXException;
-
 /**
  *
  * @author Aslak Helles&oslash;y

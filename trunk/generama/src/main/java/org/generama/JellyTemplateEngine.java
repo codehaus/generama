@@ -10,7 +10,6 @@ import org.generama.jelly.GeneramaJellyContext;
 import org.xml.sax.SAXException;
 
 import java.io.Writer;
-import java.net.URL;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;

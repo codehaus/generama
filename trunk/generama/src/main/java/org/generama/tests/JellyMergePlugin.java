@@ -1,6 +1,5 @@
 package org.generama.tests;
 
-import org.generama.MetadataProvider;
 import org.generama.Plugin;
 import org.generama.TemplateEngine;
 import org.generama.WriterMapper;
