@@ -19,6 +19,7 @@ package org.generama;
 import java.util.Collection;
 
 public interface QDoxCapableMetadataProvider extends MetadataProvider {
-    Collection getMetadata() throws GeneramaException;
+    public static final String ROLE = QDoxCapableMetadataProvider.class.getName();
 
+    Collection getMetadata() throws GeneramaException;
 }
