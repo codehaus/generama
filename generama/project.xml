@@ -31,7 +31,7 @@
     <siteDirectory>/home/projects/generama/public_html/reports</siteDirectory>
 
     <distributionSite>beaver.codehaus.org</distributionSite>
-    <distributionDirectory>/dist</distributionDirectory>
+    <distributionDirectory>/home/projects/generama/dist</distributionDirectory>
 
     <repository>
         <connection>scm:cvs:pserver:anonymous@cvs.codehaus.org:/cvsroot/xdoclet:generama</connection>
