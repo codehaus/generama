@@ -169,7 +169,7 @@
 
         <dependency>
             <id>freemarker</id>
-            <version>2.2rc2</version>
+            <version>2.3</version>
             <url>http://freemarker.sourceforge.net/</url>
         </dependency>
 
@@ -193,9 +193,9 @@
         </dependency>
 
         <dependency>
-            <id>qdox</id>
-            <version>1.5</version>
-            <url>http://qdox.codehaus.org/</url>
+            <groupId>qfork</groupId>
+            <artifactId>qfork</artifactId>
+            <version>1.7-SNAPSHOT</version>
         </dependency>
 
     </dependencies>

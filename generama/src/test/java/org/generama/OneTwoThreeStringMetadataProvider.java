@@ -1,5 +1,7 @@
 package org.generama;
 
+import com.thoughtworks.qdox.model.DocletTagFactory;
+
 import java.util.Collection;
 import java.util.ArrayList;
 
@@ -24,5 +26,9 @@ public class OneTwoThreeStringMetadataProvider implements MetadataProvider {
 
     public String getOriginalPackageName(Object metadata) {
         return metadata.toString();
+    }
+
+    public DocletTagFactory getDocletTagFactory() {
+        return null;
     }
 }

@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Arrays;
 
+import com.thoughtworks.qdox.model.DocletTagFactory;
+
 /**
  * @author Aslak Helles&oslash;y
  * @version $Revision$
@@ -27,6 +29,9 @@ public class DemoGeneramaTask extends AbstractGeneramaTask {
             return "generama.demo";
         }
 
+        public DocletTagFactory getDocletTagFactory() {
+            return null;
+        }
     }
 
     protected Generama createGenerama() {

@@ -131,7 +131,7 @@ public class Plugin implements Startable {
     public void start() {
 		System.out.println("Running " + getClass().getName());
         try {
-            Collection metadata = getMetadataProvider().getMetadata();
+            Collection metadata = getMetadata();
             if (metadata == null) {
                 throw new GeneramaException("Metadata was null. Got metadata from " + getMetadataProvider().toString(), null);
             }
@@ -145,8 +145,9 @@ public class Plugin implements Startable {
                     if (shouldGenerate(meta)) {
                         Writer out = getWriterMapper().getWriter(meta, this);
                         if(out != null) {
-                            Map m = getContextMap();
-                            putMetadata(m, meta);
+                            Map m = new HashMap();
+                            m.put("metadata", meta);
+                            populateContextMap(m);
                             templateEngine.generate(out, m, getEncoding(), getClass());
 						}
                     }
@@ -154,8 +155,9 @@ public class Plugin implements Startable {
             } else {
                 Writer out = getWriterMapper().getWriter("", this);
                 if(out != null) {
-                    Map m = getContextMap();
+                    Map m = new HashMap(contextObjects);
                     m.put("metadata", metadata);
+                    populateContextMap(m);
 	                templateEngine.generate(out, m, getEncoding(), getClass());
 				}
             }
@@ -164,15 +166,17 @@ public class Plugin implements Startable {
         }
     }
 
-    private Map getContextMap() {
-        Map m = new HashMap(contextObjects);
-        m.put("plugin", this);
-        m.put("dontedit", Plugin.DONTEDIT);
-        return m;
+    /**
+     * So that subclasses can choose what kind of metadata they want to use.
+     * @return
+     */
+    protected Collection getMetadata() {
+        return getMetadataProvider().getMetadata();
     }
 
-    protected void putMetadata(Map m, Object meta) {
-        m.put("metadata", meta);
+    protected void populateContextMap(Map map) {
+        map.put("plugin", this);
+        map.put("dontedit", Plugin.DONTEDIT);
     }
 
     public void stop() {
