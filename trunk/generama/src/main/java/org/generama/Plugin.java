@@ -25,7 +25,7 @@ public abstract class Plugin implements Startable {
     private String packagereplace = "";
     private String fileregex = "";
     private String filereplace = "";
-    private String encoding = System.getProperty("file.encoding");
+    private String encoding = "ISO-8859-1";
     private boolean isMultioutput = false;
     private final TemplateEngine templateEngine;
     private Map contextObjects = new HashMap();
@@ -34,7 +34,6 @@ public abstract class Plugin implements Startable {
         this.templateEngine = templateEngine;
         this.metadataProvider = metadataProvider;
         this.writerMapper = writerMapper;
-        setEncoding("ISO-8859-1");
     }
 
     public boolean shouldGenerate(Object metadata) {
