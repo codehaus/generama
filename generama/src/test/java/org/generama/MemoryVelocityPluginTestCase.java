@@ -5,6 +5,7 @@ import org.generama.velocity.MemoryVelocityComponent;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Collection;
 
 /**
  * @author Aslak Helles&oslash;y
@@ -25,7 +26,11 @@ public class MemoryVelocityPluginTestCase extends AbstractTextGeneratingPluginTe
                 return "test";
             }
         };
-        return new Plugin(templateEngine, metadataProvider, writerMapper);
+        return new Plugin(templateEngine, metadataProvider, writerMapper) {
+            protected Collection getMetadata() {
+                return ((TestMetadataProvider)metadataProvider).getMetadata();
+            }
+        } ;
     }
 
     protected MetadataProvider createMetadataProvider() throws Exception {

@@ -1,18 +1,26 @@
 package org.generama.defaults;
 
-import org.generama.MetadataProvider;
 import org.generama.Plugin;
+import org.generama.QDoxCapableMetadataProvider;
 import org.generama.TemplateEngine;
 import org.generama.WriterMapper;
+
+import java.util.Collection;
 
 /**
  * @author Aslak Helles&oslash;y
  * @version $Revision$
  */
 public class JavaGeneratingPlugin extends Plugin {
+    private QDoxCapableMetadataProvider metadataProvider;
 
-    protected JavaGeneratingPlugin(TemplateEngine templateEngine, MetadataProvider metadataProvider, WriterMapper writerMapper) {
+    protected Collection getMetadata() {
+        return metadataProvider.getMetadata();
+    }
+
+    protected JavaGeneratingPlugin(TemplateEngine templateEngine, QDoxCapableMetadataProvider metadataProvider, WriterMapper writerMapper) {
         super(templateEngine, metadataProvider, writerMapper);
+        this.metadataProvider = metadataProvider;
     }
 
     public String getDestinationClassname(Object metadata) {

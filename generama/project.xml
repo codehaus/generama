@@ -66,6 +66,14 @@
                 <role>Java Developer</role>
             </roles>
         </developer>
+        <developer>
+            <name>Brian Topping</name>
+            <id>topping</id>
+            <organization>The Codehaus</organization>
+            <roles>
+                <role>Java Developer</role>
+            </roles>
+        </developer>
     </developers>
 
     <contributors>

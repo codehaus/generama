@@ -1,18 +1,27 @@
 package org.generama.tests;
 
-import org.generama.MetadataProvider;
 import org.generama.Plugin;
 import org.generama.TemplateEngine;
 import org.generama.WriterMapper;
+import org.generama.QDoxCapableMetadataProvider;
+
+import java.util.Collection;
 
 /**
  * @author Aslak Helles&oslash;y
  * @version $Revision$
  */
 public class VelocityMergePlugin extends Plugin {
-    public VelocityMergePlugin(TemplateEngine templateEngine, MetadataProvider metadataProvider, WriterMapper writerMapper) {
+    private QDoxCapableMetadataProvider metadataProvider;
+
+    public VelocityMergePlugin(TemplateEngine templateEngine, QDoxCapableMetadataProvider metadataProvider, WriterMapper writerMapper) {
         super(templateEngine, metadataProvider,writerMapper);
         setMultioutput(false);
         setFilereplace("velo.txt");
+        this.metadataProvider = metadataProvider;
+    }
+
+    protected Collection getMetadata() {
+        return metadataProvider.getMetadata();
     }
 }

@@ -15,7 +15,7 @@ import java.util.HashMap;
  * @author Aslak Helles&oslash;y
  * @version $Revision$
  */
-public class Plugin implements Startable {
+public abstract class Plugin implements Startable {
     protected static final String DONTEDIT = "Generated file. Do not edit.";
 
     protected WriterMapper writerMapper;
@@ -94,12 +94,12 @@ public class Plugin implements Startable {
     }
 
     public String getDestinationPackage(Object metadata) {
-        String originalPackage = getMetadataProvider().getOriginalPackageName(metadata);
+        String originalPackage = metadataProvider.getOriginalPackageName(metadata);
         return originalPackage.replaceAll(packageregex, packagereplace);
     }
 
     public String getDestinationFilename(Object metadata) {
-        String originalFilename = getMetadataProvider().getOriginalFileName(metadata);
+        String originalFilename = metadataProvider.getOriginalFileName(metadata);
         String result = originalFilename.replaceAll(fileregex, filereplace);
         return result;
     }
@@ -133,11 +133,11 @@ public class Plugin implements Startable {
         try {
             Collection metadata = getMetadata();
             if (metadata == null) {
-                throw new GeneramaException("Metadata was null. Got metadata from " + getMetadataProvider().toString(), null);
+                throw new GeneramaException("Metadata was null. Got metadata from " + metadataProvider.toString(), null);
             }
 
             if (metadata.isEmpty()) {
-                throw new GeneramaException("Metadata was empty. Got metadata from " + getMetadataProvider().toString(), null);
+                throw new GeneramaException("Metadata was empty. Got metadata from " + metadataProvider.toString(), null);
             }
             if (isMultioutput()) {
                 for (Iterator iterator = metadata.iterator(); iterator.hasNext();) {
@@ -170,9 +170,7 @@ public class Plugin implements Startable {
      * So that subclasses can choose what kind of metadata they want to use.
      * @return
      */
-    protected Collection getMetadata() {
-        return getMetadataProvider().getMetadata();
-    }
+    abstract protected Collection getMetadata();
 
     protected void populateContextMap(Map map) {
         map.put("plugin", this);
@@ -184,10 +182,6 @@ public class Plugin implements Startable {
 
     protected WriterMapper getWriterMapper() {
         return writerMapper;
-    }
-
-    protected MetadataProvider getMetadataProvider() {
-        return metadataProvider;
     }
 
     public static String getPackageName(Class pluginClass) {
