@@ -16,7 +16,6 @@ import java.util.Map;
  */
 public class VelocityTemplateEngine implements TemplateEngine {
     private VelocityComponent velocityComponent;
-    private String templateName;
 
     public VelocityTemplateEngine(VelocityComponent velocityComponent) {
         this.velocityComponent = velocityComponent;
@@ -26,22 +25,12 @@ public class VelocityTemplateEngine implements TemplateEngine {
         this(new ClasspathVelocityComponent());
     }
 
-    public String getTemplatename() {
-        return templateName;
-    }
-
-    public void setTemplatename(String templateName) {
-        this.templateName = templateName;
-    }
-
     public void generate(Writer out, Map contextObjects, String encoding, Class pluginClass) throws GeneramaException {
         VelocityContext context = new VelocityContext(contextObjects);
-        if (templateName == null) {
-            templateName = getScriptPath(getUnqualifiedClassName(pluginClass) + ".vm", pluginClass);
-        }
+        String script = getScriptPath(getUnqualifiedClassName(pluginClass) + ".vm", pluginClass);
         try {
             VelocityEngine velocityEngine = velocityComponent.getVelocityEngine();
-            velocityEngine.mergeTemplate(templateName, context, out);
+            velocityEngine.mergeTemplate(script, context, out);
             out.flush();
         } catch (MethodInvocationException e) {
             Throwable cause = e.getWrappedThrowable() != null ? e.getWrappedThrowable() : e;
