@@ -14,7 +14,7 @@ import java.util.Collection;
  */
 public abstract class QDoxPlugin extends Plugin  {
     
-    private QDoxCapableMetadataProvider metadataProvider;
+    protected QDoxCapableMetadataProvider metadataProvider;
 
     public QDoxPlugin(TemplateEngine templateEngine, QDoxCapableMetadataProvider metadataProvider, WriterMapper writerMapper) {
         super(templateEngine, metadataProvider, writerMapper);
