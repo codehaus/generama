@@ -23,7 +23,7 @@ public class ClasspathVelocityComponent implements VelocityComponent {
         Properties properties = new Properties();
         properties.setProperty( "resource.loader", "classpath");
         properties.setProperty( "classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
-
+        
         try {
             velocityEngine.init(properties);
         } catch (RuntimeException e) {
