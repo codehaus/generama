@@ -1,6 +1,6 @@
 package org.generama;
 
-import org.generama.defaults.StringWriterMapper;
+import org.generama.tests.SinkWriterMapper;
 import junit.framework.TestCase;
 
 /**
@@ -13,7 +13,7 @@ public class SimpleGeneramaTestCase extends TestCase {
 
     protected Generama createGeneramaWithThreeMetadataObjects() {
         Generama generama = new Generama(OneTwoThreeStringMetadataProvider.class,
-                StringWriterMapper.class);
+                SinkWriterMapper.class);
         return generama;
     }
 }

@@ -1,54 +1,25 @@
 package org.generama.tests;
 
-import org.custommonkey.xmlunit.Diff;
-import org.custommonkey.xmlunit.Difference;
-import org.custommonkey.xmlunit.DifferenceListener;
-import org.custommonkey.xmlunit.XMLTestCase;
-import org.custommonkey.xmlunit.XMLUnit;
+import org.custommonkey.xmlunit.*;
+import org.generama.OutputValidator;
+import org.generama.defaults.XMLOutputValidator;
 import org.w3c.dom.Document;
-import org.xml.sax.EntityResolver;
-import org.xml.sax.ErrorHandler;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
+import org.xml.sax.*;
 
 import javax.xml.parsers.DocumentBuilder;
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Baseclass for testing generation of XML content. Ignores
  * whitespace, ordering of attributes and comments.
  * Uses XMLUnit internally to compare equality of XML documents.
- * 
+ *
  * @author Aslak Helles&oslash;y
- * @version $Revision$
  */
-public abstract class AbstractXMLGeneratingPluginTestCase extends AbstractPluginTestCase implements EntityResolver {
-    private Map dtds = new HashMap();
+public abstract class AbstractXMLGeneratingPluginTestCase extends AbstractPluginTestCase {
     protected DocumentBuilder expectedParser;
     protected DocumentBuilder actualParser;
-
-    protected void registerDtd(String publicId, URL dtd) {
-        dtds.put(publicId, dtd);
-
-        // now turn on validation
-        XMLUnit.getControlDocumentBuilderFactory().setValidating(true);
-        XMLUnit.getTestDocumentBuilderFactory().setValidating(true);
-    }
-
-    public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException {
-        URL dtd = (URL) dtds.get(publicId);
-        if (dtd != null) {
-            InputSource inputSource = new InputSource(dtd.openStream());
-            inputSource.setPublicId(publicId);
-            inputSource.setSystemId(systemId);
-            return inputSource;
-        }
-        return null;
-    }
 
     protected final void compare(URL expected, URL actual) throws IOException, SAXException {
         Document expectedDocument = XMLUnit.buildDocument(expectedParser, new InputSource(expected.openStream()));
@@ -56,9 +27,17 @@ public abstract class AbstractXMLGeneratingPluginTestCase extends AbstractPlugin
 
         Diff diff = new Diff(expectedDocument, actualDocument) {
             public int differenceFound(Difference difference) {
-                if ("sequence of attributes".equals(difference.getDescription())) {
+                if (difference == DifferenceConstants.CHILD_NODELIST_SEQUENCE ||
+                        difference == DifferenceConstants.ATTR_SEQUENCE) {
                     return DifferenceListener.RETURN_ACCEPT_DIFFERENCE;
                 }
+/*
+                if (difference == DifferenceConstants.DOCTYPE_NAME ||
+                        difference == DifferenceConstants.DOCTYPE_PUBLIC_ID ||
+                        difference == DifferenceConstants.DOCTYPE_SYSTEM_ID) {
+                    return DifferenceListener.RETURN_IGNORE_DIFFERENCE_NODES_SIMILAR;
+                }
+*/
                 return super.differenceFound(difference);
             }
         };
@@ -76,18 +55,47 @@ public abstract class AbstractXMLGeneratingPluginTestCase extends AbstractPlugin
             public void error(SAXParseException exception) throws SAXException {
                 throw exception;
             }
+
             public void fatalError(SAXParseException exception) throws SAXException {
                 throw exception;
             }
+
             public void warning(SAXParseException exception) {
             }
         };
+
         expectedParser = XMLUnit.getControlParser();
         expectedParser.setErrorHandler(errorHandler);
-        expectedParser.setEntityResolver(this);
 
         actualParser = XMLUnit.getTestParser();
         actualParser.setErrorHandler(errorHandler);
-        actualParser.setEntityResolver(this);
+
+        EntityResolver testResolver = null;
+
+        //todo think do we need validation there??
+        OutputValidator validator = plugin.getOutputValidator();
+        if (validator != null) { //fixme isValidate condition should be removed, it is used to until plugin source
+            if (!(validator instanceof XMLOutputValidator))
+                throw new RuntimeException("For XMLGeneratedPlugin should be used XMLOutputValidator");
+
+            XMLOutputValidator xmlOutputValidator = (XMLOutputValidator) validator;
+
+            testResolver = xmlOutputValidator.getResolver();
+
+            // now turn on validator
+            if (plugin.isValidate()) {
+                XMLUnit.getControlDocumentBuilderFactory().setValidating(true);
+                XMLUnit.getTestDocumentBuilderFactory().setValidating(true);
+            }
+        } else {
+            testResolver = new EntityResolver() {
+                public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException {
+                    return null;
+                }
+            };
+        }
+
+        expectedParser.setEntityResolver(testResolver);
+        actualParser.setEntityResolver(testResolver);
     }
 }

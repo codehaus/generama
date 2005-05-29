@@ -1,24 +1,38 @@
 package org.generama.tests;
 
-import org.generama.WriterMapper;
 import org.generama.Plugin;
+import org.generama.WriterMapper;
+import org.generama.defaults.Outcome;
 
-import java.io.Writer;
-import java.io.IOException;
-import java.io.StringWriter;
+import java.io.*;
+import java.net.URL;
+import java.net.URLStreamHandler;
+import java.net.URLConnection;
 
 /**
  * @author Aslak Helles&oslash;y
- * @version $Revision$
  */
 public class SinkWriterMapper implements WriterMapper {
-    private StringWriter sink = new StringWriter();
+    private StringWriter writer = new StringWriter();
 
-    public Writer getWriter(Object metadata, Plugin plugin) throws IOException {
-        return sink;
+    public Outcome getOutcome(Object metadata, Plugin plugin) throws IOException {
+        URL url = new URL("string", "", -1, "sinkWriter", new URLStreamHandler(){
+            protected URLConnection openConnection(URL u) {
+                return new URLConnection(u) {
+                    public void connect() {
+                    }
+
+                    public InputStream getInputStream() {
+                        return new StringBufferInputStream(SinkWriterMapper.this.getContent());
+                    }
+                };
+            }
+        });
+
+        return new Outcome(writer, url);
     }
 
     public String getContent() {
-        return sink.getBuffer().toString();
+        return writer.getBuffer().toString();
     }
 }

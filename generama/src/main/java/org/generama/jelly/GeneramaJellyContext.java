@@ -39,11 +39,14 @@ public class GeneramaJellyContext extends JellyContext {
     }
 
     public URL getResource(String uri) throws MalformedURLException {
-        return getClass().getClassLoader().getResource(uri);
+        URL resource = getClass().getClassLoader().getResource(uri);
+        if (resource != null)
+            return resource;
+
+        return super.getResource(uri);
     }
 
     protected JellyContext createChildContext() {
         return new GeneramaJellyContext(this);
     }
-
 }

@@ -10,7 +10,6 @@ import org.generama.WriterMapper;
  * @version $Revision$
  */
 public class JavaGeneratingPlugin extends QDoxPlugin {
-
     protected JavaGeneratingPlugin(TemplateEngine templateEngine, QDoxCapableMetadataProvider metadataProvider, WriterMapper writerMapper) {
         super(templateEngine, metadataProvider, writerMapper);
     }
