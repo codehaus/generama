@@ -215,6 +215,7 @@ public abstract class Plugin implements Startable {
             throw new RuntimeException("Couldn't generate content", e);
         } catch (OutputValidationError e) {
             System.err.println("File " + e.getUrl().getFile() + " did not pass validation: " + e.getMessage());
+            throw e;
         }
     }
 
