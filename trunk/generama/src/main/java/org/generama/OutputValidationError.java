@@ -5,7 +5,7 @@ import java.net.URL;
 /**
  * @author Anatol Pomozov
  */
-public class OutputValidationError extends Exception {
+public class OutputValidationError extends RuntimeException {
     private URL url;
 
     public OutputValidationError(String message, URL url) {

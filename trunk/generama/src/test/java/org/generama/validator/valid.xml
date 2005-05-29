@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE top SYSTEM "E:\users\anatol\develop\osf_projects\my_osf\generama\src\test\java\org\generama\validator\the.dtd">
+<top name="root">
+	<child resource="a1" file="f1" jar="jar1"/>
+	<child resource="a2" file="f2" jar="jar2"/>
+</top>
