@@ -1,13 +1,12 @@
 package org.generama;
 
-import java.io.Writer;
+import org.generama.defaults.Outcome;
+
 import java.io.IOException;
 
 /**
- * 
  * @author Aslak Helles&oslash;y
- * @version $Revision$
  */
 public interface WriterMapper {
-    Writer getWriter(Object metadata, Plugin plugin) throws IOException;
+    Outcome getOutcome(Object metadata, Plugin plugin) throws IOException;
 }

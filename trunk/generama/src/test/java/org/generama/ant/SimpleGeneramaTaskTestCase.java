@@ -3,7 +3,7 @@ package org.generama.ant;
 import org.apache.tools.ant.Project;
 import org.generama.Generama;
 import org.generama.OneTwoThreeStringMetadataProvider;
-import org.generama.defaults.StringWriterMapper;
+import org.generama.tests.SinkWriterMapper;
 import org.jmock.Mock;
 import org.jmock.MockObjectTestCase;
 import org.nanocontainer.ant.PicoContainerTask;
@@ -39,7 +39,7 @@ public class SimpleGeneramaTaskTestCase extends MockObjectTestCase {
             protected Generama createGenerama() {
                 Generama generama = new Generama(
                         OneTwoThreeStringMetadataProvider.class,
-                        StringWriterMapper.class
+                        SinkWriterMapper.class
                 ) {
                     public void composeContainer(MutablePicoContainer pico, Object assemblyScope) {
                         super.composeContainer(pico, assemblyScope);

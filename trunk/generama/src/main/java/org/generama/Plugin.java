@@ -1,16 +1,16 @@
 package org.generama;
 
-import org.picocontainer.Startable;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
-
 import java.io.File;
 import java.io.IOException;
-import java.io.Writer;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.HashMap;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+import org.generama.defaults.Outcome;
+import org.picocontainer.Startable;
 
 /**
  * @author Aslak Helles&oslash;y
@@ -29,6 +29,8 @@ public abstract class Plugin implements Startable {
     private boolean isMultioutput = false;
     private final TemplateEngine templateEngine;
     private Map contextObjects = new HashMap();
+    private OutputValidator outputValidator;
+    private boolean validate = true;
 
     public Plugin(TemplateEngine templateEngine, MetadataProvider metadataProvider, WriterMapper writerMapper) {
         this.templateEngine = templateEngine;
@@ -48,10 +50,17 @@ public abstract class Plugin implements Startable {
         isMultioutput = multioutput;
     }
 
+    public void setOutputValidator(OutputValidator outputValidator) {
+        this.outputValidator = outputValidator;
+    }
+
+    public OutputValidator getOutputValidator() {
+        return outputValidator;
+    }
+
     /**
-     * @param fileregex a regular expression indicating
-     *                  what parts of each metadata object's file name
-     *                  should be replaced in the output file.
+     * @param fileregex a regular expression indicating what parts of each metadata object's file name
+     * should be replaced in the output file.
      */
     public void setFileregex(String fileregex) {
         if (fileregex == null) throw new NullPointerException();
@@ -73,6 +82,11 @@ public abstract class Plugin implements Startable {
         this.packagereplace = packagereplace;
     }
 
+    /**
+     * Directory where generated file should be created
+     *
+     * @generama.property required="true"
+     */
     public void setDestdir(String destdir) {
         if (destdir == null) throw new NullPointerException();
         this.destdir = new File(destdir);
@@ -82,6 +96,24 @@ public abstract class Plugin implements Startable {
         return destdir;
     }
 
+    /**
+     * Validate output files or not.
+     *
+     * @generama.property required="false" default="true"
+     */
+    public void setValidate(boolean validate) {
+        this.validate = validate;
+    }
+
+    public boolean isValidate() {
+        return validate;
+    }
+
+    /**
+     * Encoding of source files
+     *
+     * @generama.property required="false" default="ISO-8859-1"
+     */
     public void setEncoding(String encoding) {
         if (encoding == null) throw new NullPointerException();
         this.encoding = encoding;
@@ -146,18 +178,23 @@ public abstract class Plugin implements Startable {
                 for (Iterator iterator = metadata.iterator(); iterator.hasNext();) {
                     Object meta = (Object) iterator.next();
                     if (shouldGenerate(meta)) {
-                        Writer out = getWriterMapper().getWriter(meta, this);
-                        if (out != null) {
+                        Outcome out = getWriterMapper().getOutcome(meta, this);
+                        if (out.getWriter() != null) {
                             Map m = new HashMap();
                             m.put("metadata", meta);
                             populateContextMap(m);
-                            templateEngine.generate(out, m, getEncoding(), getClass());
+                            templateEngine.generate(out.getWriter(), m, getEncoding(), getClass());
+
+                            if (validate && outputValidator != null) {
+                                outputValidator.validate(out.getURL());
+                            }
+                            out.getWriter().close();
                         }
                     }
                 }
             } else {
-                Writer out = getWriterMapper().getWriter("", this);
-                if (out != null) {
+                Outcome out = getWriterMapper().getOutcome("", this);
+                if (out.getWriter() != null) {
                     Map m = new HashMap(contextObjects);
                     Collection filtered = CollectionUtils.select(metadata, new Predicate() {
                         public boolean evaluate(Object o) {
@@ -166,11 +203,18 @@ public abstract class Plugin implements Startable {
                     });
                     m.put("metadata", filtered);
                     populateContextMap(m);
-                    templateEngine.generate(out, m, getEncoding(), getClass());
+                    templateEngine.generate(out.getWriter(), m, getEncoding(), getClass());
+
+                    if (validate && outputValidator != null) {
+                        outputValidator.validate(out.getURL());
+                    }
+                    out.getWriter().close();
                 }
             }
         } catch (IOException e) {
             throw new RuntimeException("Couldn't generate content", e);
+        } catch (OutputValidationError e) {
+            System.err.println("File " + e.getUrl().getFile() + " did not pass validation: " + e.getMessage());
         }
     }
 
