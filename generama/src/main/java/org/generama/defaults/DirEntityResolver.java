@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 
 /**
  * Resolver which calculates dtd name from systemId and prefix
@@ -21,7 +22,7 @@ import java.io.InputStream;
  * It is very useful if you have numerous dtd files and you dont want to enumerate
  * them all using {@link MapPairsEntityResolver}
  * <p/>
- * If file not found then IllegalArgumentException throws
+ * If file not found then IllegalArgumentException thrown
  *
  * @author Anatol Pomozov
  */
@@ -43,6 +44,17 @@ class DirEntityResolver implements EntityResolver {
         this.prefix = prefix;
     }
 
+    /**
+     * @param basedir URL to directory where dtd collection is located
+     * @param prefix  prefix
+     */
+    public DirEntityResolver(URL basedir, String prefix) {
+        if (basedir == null)
+            throw new NullPointerException("basedir must not be null");
+        this.basedir = new File(basedir.getFile());
+        this.prefix = prefix;
+    }
+
     public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException {
         if (systemId != null) {
             if (systemId.startsWith(prefix)) {
@@ -50,16 +62,16 @@ class DirEntityResolver implements EntityResolver {
 
                 // Search for DTD
                 String path = systemId.substring(prefix.length());
-                InputStream dtdStream = new FileInputStream(new File(basedir, path));
-
-                if (dtdStream == null) {
-                    throw new IllegalArgumentException("dtd file ('" + path + "') did not found in '" + basedir + "'");
-                } else {
+                File dtdFile = new File(basedir, path);
+                if (dtdFile.exists()) {
                     log.debug("found " + systemId + " in basedir");
+                    InputStream dtdStream = new FileInputStream(dtdFile);
                     InputSource source = new InputSource(dtdStream);
                     source.setPublicId(publicId);
                     source.setSystemId(systemId);
                     return source;
+                } else {
+                    throw new IllegalArgumentException("File " + dtdFile + " does not exists");
                 }
             } else {
                 throw new IllegalArgumentException("systemId ('" + systemId + "') does not starts from prefix '" + prefix + "'");

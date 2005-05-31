@@ -1,6 +1,7 @@
 package org.generama.defaults;
 
 import org.dom4j.io.SAXReader;
+import org.dom4j.DocumentException;
 import org.generama.OutputValidationError;
 import org.generama.OutputValidator;
 import org.xml.sax.*;
@@ -11,6 +12,7 @@ import java.net.URL;
 import java.util.Map;
 import java.util.ArrayList;
 import java.io.File;
+import java.io.IOException;
 
 /**
  * @author Anatol Pomozov
@@ -35,6 +37,9 @@ public class XMLOutputValidator implements OutputValidator {
         this.resolver = new DirEntityResolver(basedir, prefix);
     }
 
+    public XMLOutputValidator(URL basedir, String prefix) {
+        this.resolver = new DirEntityResolver(basedir, prefix);
+    }
 
     public EntityResolver getResolver() {
         return resolver;
@@ -66,8 +71,10 @@ public class XMLOutputValidator implements OutputValidator {
 
         try {
             reader.read(url.openStream());
-        } catch (Exception e) {
+        } catch (DocumentException e) {
             throw new OutputValidationError("ParsingFailed " + e.getMessage(), url);
+        } catch (IOException e) {
+            log.error("IOExcepton", e);
         }
 
         if (!exceptions.isEmpty()) {
