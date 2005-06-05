@@ -9,7 +9,7 @@
     <pomVersion>3</pomVersion>
     <id>generama</id>
     <name>Generama</name>
-    <currentVersion>1.1.1</currentVersion>
+    <currentVersion>1.2</currentVersion>
 
     <organization>
         <name>Generama</name>
@@ -74,6 +74,13 @@
                 <role>Java Developer</role>
             </roles>
         </developer>
+        <developer>
+            <name>Konstantin Pribluda</name>
+            <organization>J Tec Team</organization>
+            <roles>
+                <role>Java Developer</role>
+            </roles>
+        </developer>
     </developers>
 
     <contributors>
@@ -84,7 +91,7 @@
             <name>Jon Mountjoy</name>
         </contributor>
         <contributor>
-            <name>Konstantin Pribluda</name>
+            <name>Anatol Pomozov</name>
         </contributor>
     </contributors>
 
