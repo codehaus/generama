@@ -1,0 +1,6 @@
+tmp
+target
+*.iws
+*.ipr
+*.iml
+*.log*
