@@ -9,7 +9,7 @@
     <pomVersion>3</pomVersion>
     <id>generama</id>
     <name>Generama</name>
-    <currentVersion>1.2</currentVersion>
+    <currentVersion>1.2.1-SNAPSHOT</currentVersion>
 
     <organization>
         <name>Generama</name>
