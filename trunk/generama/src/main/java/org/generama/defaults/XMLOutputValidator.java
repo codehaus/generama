@@ -51,7 +51,20 @@ public class XMLOutputValidator implements OutputValidator {
         }
 
         SAXReader reader = new SAXReader();
-
+        // SOURCE: Validation of Schemas: http://www.burnthacker.com/archives/000086.html
+        try {
+			// Enables validation in general
+			reader.setFeature("http://xml.org/sax/features/validation", true);
+            // Enables XML Schema Validation
+            reader.setFeature("http://apache.org/xml/features/validation/schema", true);
+            // Enables full (if slow) schema checking
+            reader.setFeature("http://apache.org/xml/features/validation/schema-full-checking", true);
+            // Only validate if there is enough data in the document to validate. This is important if you don't have DTD or Schema data in everything you parse.
+            // reader.setFeature("http://apache.org/xml/features/validation/dynamic", true);
+		} catch (SAXException e) {
+            log.error("SAXException", e);
+		}
+        // END
         reader.setValidation(true);
         reader.setEntityResolver(resolver);
 
