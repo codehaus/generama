@@ -1,8 +1,8 @@
 package org.generama;
 
-import org.generama.velocity.ClasspathVelocityComponent;
-import org.picocontainer.MutablePicoContainer;
+import org.generama.velocity.ClasspathFileResourceVelocityComponent;
 import org.nanocontainer.integrationkit.ContainerComposer;
+import org.picocontainer.MutablePicoContainer;
 
 /**
  * This class installs the core Generama components in a <a href="http://www.picocontainer.org/">PicoContainer</a>
@@ -20,7 +20,7 @@ public class Generama implements ContainerComposer {
     }
 
     public void composeContainer(MutablePicoContainer pico, Object assemblyScope) {
-        pico.registerComponentImplementation(ClasspathVelocityComponent.class);
+        pico.registerComponentImplementation(ClasspathFileResourceVelocityComponent.class);
         pico.registerComponentImplementation(metadataProviderClass);
         pico.registerComponentImplementation(writerMapperClass);
         pico.registerComponentImplementation(JellyTemplateEngine.class);
