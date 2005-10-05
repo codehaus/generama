@@ -55,7 +55,7 @@ class DirEntityResolver implements EntityResolver {
         this.prefix = prefix;
     }
 
-    public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException {
+    public InputSource resolveEntity(String publicId, String systemId) throws IOException {
         if (systemId != null) {
             if (systemId.startsWith(prefix)) {
                 log.debug("trying to locate " + systemId + " in dir " + basedir);

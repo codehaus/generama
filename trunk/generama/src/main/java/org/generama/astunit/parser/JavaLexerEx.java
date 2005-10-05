@@ -1,9 +1,8 @@
 package org.generama.astunit.parser;
 
-import antlr.Token;
-
-import java.io.Reader;
 import java.io.InputStream;
+
+import antlr.Token;
 
 /**
  * @author Aslak Helles&oslash;y
