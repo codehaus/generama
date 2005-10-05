@@ -17,7 +17,7 @@ import org.picocontainer.Startable;
  */
 public class SimpleGeneramaTaskTestCase extends MockObjectTestCase {
     private PicoContainerTask task;
-    private Mock mockPlugin = new Mock(Startable.class);
+    Mock mockPlugin = new Mock(Startable.class);
 
     public void setUp() {
         Project project = new Project();
