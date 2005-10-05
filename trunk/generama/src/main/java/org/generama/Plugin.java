@@ -176,13 +176,14 @@ public abstract class Plugin implements Startable {
             }
             if (isMultioutput()) {
                 for (Iterator iterator = metadata.iterator(); iterator.hasNext();) {
-                    Object meta = (Object) iterator.next();
+                    Object meta = iterator.next();
                     if (shouldGenerate(meta)) {
                         Outcome out = getWriterMapper().getOutcome(meta, this);
                         if (out.getWriter() != null) {
                             Map m = new HashMap();
                             m.put("metadata", meta);
                             populateContextMap(m);
+                            preGenerate();
                             templateEngine.generate(out.getWriter(), m, getEncoding(), getClass());
 
                             if (validate && outputValidator != null) {
@@ -203,6 +204,7 @@ public abstract class Plugin implements Startable {
                     });
                     m.put("metadata", filtered);
                     populateContextMap(m);
+                    preGenerate();
                     templateEngine.generate(out.getWriter(), m, getEncoding(), getClass());
 
                     if (validate && outputValidator != null) {
@@ -231,8 +233,18 @@ public abstract class Plugin implements Startable {
         map.put("plugin", this);
         map.put("dontedit", Plugin.DONTEDIT);
     }
-
+    
+    /**
+     * A method called right before generation is called (one time if multiOutput is false, several otherwise).
+     * Allows for late setting of directorios for example in MergeableVelocityTemplateEngine
+     *
+     * @see MergeableVelocityTemplateEngine#addPath(String)
+     */
+    protected void preGenerate() {
+        // Default impl is empty
+    }
     public void stop() {
+//    	 Default impl is empty
     }
 
     protected WriterMapper getWriterMapper() {
