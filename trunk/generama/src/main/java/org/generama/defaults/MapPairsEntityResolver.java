@@ -1,12 +1,11 @@
 package org.generama.defaults;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.Map;
+
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-
-import java.io.IOException;
-import java.util.Map;
-import java.net.URL;
 
 /**
  * Resolver which calculates filepath to dtd from systemId of given XML file.
@@ -24,7 +23,7 @@ class MapPairsEntityResolver implements EntityResolver {
         this.dtds = dtds;
     }
 
-    public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException {
+    public InputSource resolveEntity(String publicId, String systemId) throws IOException {
         URL dtdUrl =  (URL) dtds.get(systemId);
         if (dtdUrl == null)
             throw new IllegalArgumentException("DTD file not defined for " + systemId);
