@@ -9,7 +9,7 @@
     <pomVersion>3</pomVersion>
     <id>generama</id>
     <name>Generama</name>
-    <currentVersion>1.2.1-SNAPSHOT</currentVersion>
+    <currentVersion>1.2.1</currentVersion>
 
     <organization>
         <name>Generama</name>
@@ -148,7 +148,7 @@
 
         <dependency>
             <id>commons-jelly</id>
-            <version>1.0-RC1</version>
+            <version>1.0</version>
             <url>http://jakarta.apache.org/jelly/</url>
         </dependency>
 
@@ -208,9 +208,9 @@
         </dependency>
 
         <dependency>
-            <groupId>qdox</groupId>
+            <groupId>generama</groupId>
             <artifactId>qdox</artifactId>
-            <version>1.6-SNAPSHOT</version>
+            <version>20051211.114207</version>
         </dependency>
 
     </dependencies>
