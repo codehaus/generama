@@ -148,6 +148,28 @@ public abstract class Plugin implements Startable {
     }
 
     /**
+     * Returns true if the given file is in the given directory or one of its subdirectories.
+     * More specifically returns true is the file's canonical path starts with the
+     * directory's canonical path. (Helper method)
+     */
+    protected boolean isIn(File file, File directory) {
+        try {
+            final String filePath = file.getCanonicalPath();
+            final String dirPath = directory.getCanonicalPath();
+            return filePath.startsWith(dirPath);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * @see #isIn(java.io.File, java.io.File)
+     */
+    protected boolean isIn(String file, String directory) {
+        return isIn(new File(file), new File(directory));
+    }
+
+    /**
      * Assert method. (Helper method for templates).
      *
      * @param message   failure message.
@@ -172,7 +194,8 @@ public abstract class Plugin implements Startable {
             }
 
             if (metadata.isEmpty()) {
-                throw new GeneramaException("Metadata was empty. Got metadata from " + metadataProvider.toString(), null);
+                System.err.println("Metadata was empty. Got metadata from " + metadataProvider.toString());
+                return;
             }
             if (isMultioutput()) {
                 for (Iterator iterator = metadata.iterator(); iterator.hasNext();) {
@@ -223,8 +246,6 @@ public abstract class Plugin implements Startable {
 
     /**
      * So that subclasses can choose what kind of metadata they want to use.
-     *
-     * @return
      */
     abstract protected Collection getMetadata();
 
