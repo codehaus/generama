@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-
 <!DOCTYPE project [
     <!ENTITY eacute "&#233;">
     <!ENTITY oslash "&#248;">
 ]>
 
-<project xmlns:j="jelly:core" xmlns:ant="jelly:ant">
+<project xmlns="http://maven.apache.org/POM/3.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/3.0.0 http://maven.apache.org/maven-v3_0_0.xsd">
+
     <pomVersion>3</pomVersion>
     <id>generama</id>
     <name>Generama</name>
-    <currentVersion>1.2.1</currentVersion>
+    <currentVersion>1.2.2-SNAPSHOT</currentVersion>
 
     <organization>
         <name>Generama</name>
@@ -97,7 +99,8 @@
 
     <dependencies>
         <dependency>
-            <id>picocontainer</id>
+            <groupId>picocontainer</groupId>
+            <artifactId>picocontainer</artifactId>
             <version>1.0</version>
             <url>http://www.picocontainer.org/</url>
         </dependency>
@@ -117,13 +120,15 @@
         </dependency>
 
         <dependency>
-            <id>velocity</id>
+            <groupId>velocity</groupId>
+            <artifactId>velocity</artifactId>
             <version>1.4</version>
             <url>http://jakarta.apache.org/velocity/</url>
         </dependency>
 
         <dependency>
-            <id>commons-collections</id>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
             <version>3.1</version>
             <url>http://jakarta.apache.org/</url>
         </dependency>
@@ -135,19 +140,22 @@
         </dependency>
 
         <dependency>
-            <id>commons-logging</id>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
             <version>1.0.4</version>
             <url>http://jakarta.apache.org/commons/logging/</url>
         </dependency>
 
         <dependency>
-            <id>commons-beanutils</id>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
             <version>1.7.0</version>
             <url>http://jakarta.apache.org/</url>
         </dependency>
 
         <dependency>
-            <id>commons-jelly</id>
+            <groupId>commons-jelly</groupId>
+            <artifactId>commons-jelly</artifactId>
             <version>1.0</version>
             <url>http://jakarta.apache.org/jelly/</url>
         </dependency>
@@ -165,45 +173,52 @@
         </dependency>
 
         <dependency>
-            <id>commons-jexl</id>
+            <groupId>commons-jexl</groupId>
+            <artifactId>commons-jexl</artifactId>
             <version>1.0</version>
             <url>http://jakarta.apache.org/jexl/</url>
         </dependency>
 
         <dependency>
-            <id>ant</id>
+            <groupId>ant</groupId>
+            <artifactId>ant</artifactId>
             <version>1.5.3-1</version>
             <url>http://ant.apache.org/</url>
         </dependency>
 
         <dependency>
-            <id>antlr</id>
+            <groupId>antlr</groupId>
+            <artifactId>antlr</artifactId>
             <version>2.7.2</version>
             <url>http://www.antlr.org/</url>
         </dependency>
 
         <dependency>
-            <id>freemarker</id>
-            <version>2.3</version>
+            <groupId>freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>2.3.4</version>
             <url>http://freemarker.sourceforge.net/</url>
         </dependency>
 
         <!-- Build/Test time only -->
 
         <dependency>
-            <id>xmlunit</id>
+            <groupId>xmlunit</groupId>
+            <artifactId>xmlunit</artifactId>
             <version>1.0</version>
             <url></url>
         </dependency>
 
         <dependency>
-            <id>junit</id>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
             <version>3.8.1</version>
             <url></url>
         </dependency>
 
         <dependency>
-            <id>jmock</id>
+            <groupId>jmock</groupId>
+            <artifactId>jmock</artifactId>
             <version>1.0.0</version>
         </dependency>
 
