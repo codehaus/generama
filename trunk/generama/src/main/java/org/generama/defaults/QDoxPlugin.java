@@ -1,20 +1,19 @@
 package org.generama.defaults;
 
 
-import java.util.Collection;
-import java.util.ArrayList;
-import java.util.List;
-import java.net.URL;
-import java.io.File;
-import java.io.IOException;
-
+import com.thoughtworks.qdox.model.JavaClass;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.generama.Plugin;
 import org.generama.QDoxCapableMetadataProvider;
 import org.generama.TemplateEngine;
 import org.generama.WriterMapper;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import com.thoughtworks.qdox.model.JavaClass;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * @author Konstantin Pribluda
@@ -62,21 +61,19 @@ public abstract class QDoxPlugin extends Plugin {
     }
 
     private boolean inRestrictedFolder(JavaClass javaClass) {
-        if (restrictedFolders.isEmpty())
+        if (restrictedFolders.isEmpty()) {
             return false;
+        }
 
-        try {
-            URL url = javaClass.getSource().getURL();
-            String canonicalPath = new File(url.getFile()).getCanonicalPath();
+        String sourcePath = javaClass.getSource().getURL().getFile();
             for (int i = 0; i < restrictedFolders.size(); i++) {
                 String folder = (String) restrictedFolders.get(i);
-                if (canonicalPath.startsWith(folder))
+            if (isIn(sourcePath, folder)) {
                     return true;
             }
-            if (log.isDebugEnabled())
-                log.debug("File " + canonicalPath + " not in restricted folder");
-        } catch (IOException e) {
-            log.warn(e.getMessage());
+        }
+        if (log.isDebugEnabled()) {
+            log.debug("File " + sourcePath + " not in restricted folder");
         }
         return false;
     }
