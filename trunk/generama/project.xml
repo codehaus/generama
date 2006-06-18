@@ -43,20 +43,6 @@
         <url>http://cvs.codehaus.org/viewcvs.cgi/generama/?cvsroot=xdoclet</url>
     </repository>
 
-    <!--mailingLists>
-      <mailingList>
-        <name>Generama Developers</name>
-        <subscribe>http://lists.codehaus.org/mailman/listinfo/picocontainer-dev</subscribe>
-        <unsubscribe>http://lists.codehaus.org/mailman/listinfo/picocontainer-dev</unsubscribe>
-        <archive>http://lists.codehaus.org/pipermail/picocontainer-dev/</archive>
-      </mailingList>
-      <mailingList>
-        <name>Generama CVS Commits (CVSSpam)</name>
-        <subscribe>http://lists.codehaus.org/mailman/listinfo/picocontainer-commits</subscribe>
-        <unsubscribe>http://lists.codehaus.org/mailman/listinfo/picocontainer-commits</unsubscribe>
-        <archive>http://lists.codehaus.org/pipermail/picocontainer-commits/</archive>
-      </mailingList>
-    </mailingLists-->
 
     <developers>
         <developer>
@@ -78,6 +64,7 @@
         </developer>
         <developer>
             <name>Konstantin Pribluda</name>
+            <id>ko5tik</id>
             <organization>J Tec Team</organization>
             <roles>
                 <role>Java Developer</role>
