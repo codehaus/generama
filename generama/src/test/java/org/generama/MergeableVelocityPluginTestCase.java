@@ -17,7 +17,7 @@ import org.generama.velocity.ClasspathFileResourceVelocityComponent;
  */
 public class MergeableVelocityPluginTestCase extends AbstractXMLGeneratingPluginTestCase {
 
-    protected Plugin createPlugin(final MetadataProvider metadataProvider, WriterMapper writerMapper)
+    protected Plugin createPlugin(final MetadataProvider provider, WriterMapper writerMapper)
         throws Exception {
         String path;
         assertNotNull(path = System.getProperty("basedir"));
@@ -32,7 +32,7 @@ public class MergeableVelocityPluginTestCase extends AbstractXMLGeneratingPlugin
             }
         };
 
-        return new Plugin(templateEngine, metadataProvider, writerMapper) {
+        return new Plugin(templateEngine, provider, writerMapper) {
             protected Collection getMetadata() {
                 return ((TestMetadataProvider)metadataProvider).getMetadata();
             }

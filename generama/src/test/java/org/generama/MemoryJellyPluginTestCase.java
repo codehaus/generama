@@ -16,7 +16,7 @@ import java.util.Collection;
  */
 public class MemoryJellyPluginTestCase extends AbstractXMLGeneratingPluginTestCase {
 
-    protected Plugin createPlugin(MetadataProvider metadataProvider, WriterMapper writerMapper) {
+    protected Plugin createPlugin(MetadataProvider provider, WriterMapper writerMapper) {
         JellyTemplateEngine templateEngine = new JellyTemplateEngine(){
             protected URL getScriptURL(Class pluginClass, String extension) {
                 try {
@@ -35,7 +35,7 @@ public class MemoryJellyPluginTestCase extends AbstractXMLGeneratingPluginTestCa
             }
 
         };
-        return new Plugin(templateEngine, metadataProvider, writerMapper) {
+        return new Plugin(templateEngine, provider, writerMapper) {
             protected Collection getMetadata() {
                 return ((TestMetadataProvider) metadataProvider).getMetadata();
             }

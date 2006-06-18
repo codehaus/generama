@@ -12,7 +12,7 @@ import java.util.Collection;
  * @version $Revision$
  */
 public class MemoryVelocityPluginTestCase extends AbstractTextGeneratingPluginTestCase {
-    protected Plugin createPlugin(MetadataProvider metadataProvider, WriterMapper writerMapper) throws Exception {
+    protected Plugin createPlugin(MetadataProvider provider, WriterMapper writerMapper) throws Exception {
         MemoryVelocityComponent velocityComponent = new MemoryVelocityComponent();
 
         velocityComponent.getMemoryResourceLoader().addScript("test", ""
@@ -26,7 +26,7 @@ public class MemoryVelocityPluginTestCase extends AbstractTextGeneratingPluginTe
                 return "test";
             }
         };
-        return new Plugin(templateEngine, metadataProvider, writerMapper) {
+        return new Plugin(templateEngine, provider, writerMapper) {
             protected Collection getMetadata() {
                 return ((TestMetadataProvider)metadataProvider).getMetadata();
             }
