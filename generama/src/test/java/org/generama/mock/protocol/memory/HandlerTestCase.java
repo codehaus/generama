@@ -3,6 +3,8 @@ package org.generama.mock.protocol.memory;
 import junit.framework.TestCase;
 
 import java.net.URL;
+import java.net.URLStreamHandler;
+import java.net.URLStreamHandlerFactory;
 import java.security.AccessController;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -16,6 +18,11 @@ import sun.security.action.GetPropertyAction;
  * @version $Revision$
  */
 public class HandlerTestCase extends TestCase {
+	
+	public HandlerTestCase() {
+		super();
+		Handler.initHandler();
+	}
     public void testMemoryURL() throws IOException {
         assertMemoryUrlProviderIsConfigured();
         URL url = new URL("memory", null, "hello\nworld\n");

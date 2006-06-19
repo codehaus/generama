@@ -17,6 +17,7 @@ public abstract class AbstractPluginTestCase extends TestCase {
     protected Plugin plugin;
     private SinkWriterMapper writerMapper;
 
+
     protected void setUp() throws Exception {
         writerMapper = new SinkWriterMapper();
         plugin = createPlugin(createMetadataProvider(), writerMapper);
