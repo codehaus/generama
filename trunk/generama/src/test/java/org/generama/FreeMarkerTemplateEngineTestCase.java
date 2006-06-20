@@ -1,9 +1,9 @@
 package org.generama;
 
-import org.generama.tests.AbstractTextGeneratingPluginTestCase;
-
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import org.generama.tests.AbstractTextGeneratingPluginTestCase;
 
 /**
  * @author Aslak Helles&oslash;y
@@ -11,7 +11,12 @@ import java.net.URL;
  */
 public class FreeMarkerTemplateEngineTestCase extends AbstractTextGeneratingPluginTestCase {
 	
-    protected Plugin createPlugin(MetadataProvider metadataProvider, WriterMapper writerMapper) throws Exception {
+	
+    public FreeMarkerTemplateEngineTestCase() {
+		super();
+	}
+
+	protected Plugin createPlugin(MetadataProvider metadataProvider, WriterMapper writerMapper) throws Exception {
         return new TestFreemarkerPlugin(new FreeMarkerTemplateEngine(), metadataProvider, writerMapper);
     }
 
