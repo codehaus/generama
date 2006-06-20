@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>generama</groupId>
     <artifactId>generama</artifactId>
     <name>Generama</name>
-    <version>1.2.2-SNAPSHOT</version>
+    <version>1.2.2</version>
     <description>Code generation framework</description>
     <url>http://xdoclet.codehaus.org/generama/</url>
     <issueManagement>
@@ -51,7 +51,8 @@
     <scm>
         <connection>scm:cvs:pserver:anonymous@cvs.generama.codehaus.org:/home/projects/generama/scm:generama</connection>
         <developerConnection>scm:cvs:ext:${user.name}@cvs.generama.codehaus.org:/home/projects/generama/scm:generama</developerConnection>
-    </scm>
+      <tag>GENERAMA_1_2_2</tag>
+  </scm>
     <organization>
         <name>Generama</name>
         <url>http://generama.codehaus.org/</url>
