@@ -134,7 +134,6 @@
                 <version>1.0-beta-1-SNAPSHOT</version>
             </extension>
         </extensions>
-        
     </build>
     <dependencies>
         <dependency>
@@ -241,9 +240,11 @@
             <url>dav:https://dav.codehaus.org/dist</url>
             <layout>legacy</layout>
         </repository>
+        <!--
         <site>
             <id>generama-site</id>
             <url>dav:https://dav.codehaus.org/generama</url>
         </site>
+        -->
     </distributionManagement>
 </project>
