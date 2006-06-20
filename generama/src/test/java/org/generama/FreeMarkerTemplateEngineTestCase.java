@@ -1,6 +1,5 @@
 package org.generama;
 
-import org.generama.mock.protocol.memory.Handler;
 import org.generama.tests.AbstractTextGeneratingPluginTestCase;
 
 import java.net.MalformedURLException;
@@ -12,10 +11,6 @@ import java.net.URL;
  */
 public class FreeMarkerTemplateEngineTestCase extends AbstractTextGeneratingPluginTestCase {
 	
-	public FreeMarkerTemplateEngineTestCase() {
-		super();
-		Handler.initHandler();
-	}
     protected Plugin createPlugin(MetadataProvider metadataProvider, WriterMapper writerMapper) throws Exception {
         return new TestFreemarkerPlugin(new FreeMarkerTemplateEngine(), metadataProvider, writerMapper);
     }

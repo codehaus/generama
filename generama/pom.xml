@@ -50,7 +50,7 @@
     </contributors>
     <scm>
         <connection>scm:cvs:pserver:anonymous@cvs.generama.codehaus.org:/home/projects/generama/scm:generama</connection>
-        <developerConnection>scm:cvs:ext:${maven.username}@cvs.generama.codehaus.org:/home/projects/generama/scm:generama</developerConnection>
+        <developerConnection>scm:cvs:ext:${user.name}@cvs.generama.codehaus.org:/home/projects/generama/scm:generama</developerConnection>
     </scm>
     <organization>
         <name>Generama</name>
@@ -113,19 +113,17 @@
                         <include>**/*TestCase.java</include>
                     </includes>
                     <systemProperties>
-                    <!--
                         <property>
                             <name>java.protocol.handler.pkgs</name>
                             <value>org.generama.mock.protocol</value>
-                        </property> --> 
+                        </property>
                         <property>
                             <name>generama.home</name>
                             <value>${basedir}</value>
                         </property>
                     </systemProperties>
-                    <argLine>-Djava.protocol.handler.pkgs=org.generama.mock.protocol</argLine>
-                    <forkMode>always</forkMode>
-                    <childDelegation>true</childDelegation>
+                    <forkMode>never</forkMode>
+                    <childDelegation>false</childDelegation>
                 </configuration>
             </plugin>
         </plugins>
