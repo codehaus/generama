@@ -1,0 +1,8 @@
+<j:jelly xmlns:j="jelly:core">
+  <j:import uri="org/generama/tests/include.jelly" inherit="true"/>
+  <foo>
+    <j:forEach var="pip" items="${metadata}">
+      <number name="${pip}"/>
+    </j:forEach>
+  </foo>
+</j:jelly>

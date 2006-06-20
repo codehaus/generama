@@ -1,0 +1,8 @@
+<!ELEMENT top (child*)>
+
+<!ATTLIST top name CDATA #REQUIRED>
+
+<!ELEMENT child EMPTY>
+<!ATTLIST child resource CDATA #IMPLIED>
+<!ATTLIST child file CDATA #IMPLIED>
+<!ATTLIST child jar CDATA #IMPLIED>
