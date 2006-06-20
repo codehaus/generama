@@ -12,10 +12,15 @@ import sun.security.action.GetPropertyAction;
 /**
  * 
  * @author Aslak Helles&oslash;y
+ * @author Konstantin Pribluda
  * @version $Revision$
  */
 public class HandlerTestCase extends TestCase {
 
+	public HandlerTestCase() {
+		System.err.println(" *** This is an ugly hack necessary from HandlerTestCase.  Must be reviewed later");
+		Handler.initHandler();		
+	}
     public void testMemoryURL() throws IOException {
         assertMemoryUrlProviderIsConfigured();
         URL url = new URL("memory", null, "hello\nworld\n");
