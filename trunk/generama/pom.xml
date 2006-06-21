@@ -232,6 +232,26 @@
             <version>20051211.114207</version>
         </dependency>
     </dependencies>
+    <repositories>
+        <repository>
+            <id>dist.codehaus.org</id>
+            <layout>legacy</layout>
+            <url>http://dist.codehaus.org</url>
+        </repository>
+        <!-- wagon dav to be found here -->
+        <repository>
+            <id>apache-snapshots</id>
+            <name>Snapshot repository</name>
+            <url>http://people.apache.org/maven-snapshot-repository/</url>
+        </repository>
+        <!-- apache repository holding jelly etc -->
+        <repository>
+            <id>apache</id>
+            <name>Apache repository</name>
+            <layout>legacy</layout>
+            <url>http://cvs.apache.org/repository/</url>
+        </repository>
+    </repositories>
     <distributionManagement>
         <repository>
             <uniqueVersion>false</uniqueVersion>
