@@ -50,7 +50,7 @@
     </contributors>
     <scm>
         <connection>scm:cvs:pserver:anonymous@cvs.generama.codehaus.org:/home/projects/generama/scm:generama</connection>
-        <developerConnection>scm:cvs:ext:ko5tik@cvs.generama.codehaus.org:/home/projects/generama/scm:generama</developerConnection>
+        <developerConnection>scm:cvs:ext:${user.name}@cvs.generama.codehaus.org:/home/projects/generama/scm:generama</developerConnection>
   </scm>
     <organization>
         <name>Generama</name>
