@@ -44,7 +44,7 @@ public class Handler extends URLStreamHandler {
 				return null;
 			}});
     	} catch(Throwable ex) {
-    		// we just ignore this ficking exception, because m2 does not fork properly
+    		// we just ignore this fucking exception, because m2 does not fork properly
     		// and URL does not like double handler definitions. 
     		// blame sun on unflexibility and surefire guys on classloader
     		// wrapping
