@@ -18,19 +18,26 @@ import org.picocontainer.Startable;
  */
 public abstract class Plugin implements Startable {
     protected static final String DONTEDIT = "Generated file. Do not edit.";
-    protected WriterMapper writerMapper;
-    protected MetadataProvider metadataProvider;
+    public static String getPackageName(Class pluginClass) {
+        String className = pluginClass.getName();
+        String packageName = className.substring(0, className.lastIndexOf('.'));
+        return packageName;
+    }
+    private Map contextObjects = new HashMap();
     private File destdir;
-    private String packageregex = "";
-    private String packagereplace = "";
+    private String encoding = "ISO-8859-1";
     private String fileregex = "";
     private String filereplace = "";
-    private String encoding = "ISO-8859-1";
     private boolean isMultioutput = false;
-    private final TemplateEngine templateEngine;
-    private Map contextObjects = new HashMap();
+    private String mergedir;
+    protected MetadataProvider metadataProvider;
     private OutputValidator outputValidator;
+    private String packageregex = "";
+    private String packagereplace = "";
+    private final TemplateEngine templateEngine;
     private boolean validate = true;
+
+    protected WriterMapper writerMapper;
 
     public Plugin(TemplateEngine templateEngine, MetadataProvider metadataProvider, WriterMapper writerMapper) {
         this.templateEngine = templateEngine;
@@ -38,89 +45,30 @@ public abstract class Plugin implements Startable {
         this.writerMapper = writerMapper;
     }
 
-    public boolean shouldGenerate(Object metadata) {
-        return true;
-    }
-
-    public boolean isMultioutput() {
-        return isMultioutput;
-    }
-
-    public void setMultioutput(boolean multioutput) {
-        isMultioutput = multioutput;
-    }
-
-    public void setOutputValidator(OutputValidator outputValidator) {
-        this.outputValidator = outputValidator;
-    }
-
-    public OutputValidator getOutputValidator() {
-        return outputValidator;
-    }
-
     /**
-     * @param fileregex a regular expression indicating what parts of each metadata object's file name
-     * should be replaced in the output file.
-     */
-    public void setFileregex(String fileregex) {
-        if (fileregex == null) throw new NullPointerException();
-        this.fileregex = fileregex;
-    }
-
-    public void setFilereplace(String filereplace) {
-        if (filereplace == null) throw new NullPointerException();
-        this.filereplace = filereplace;
-    }
-
-    public void setPackageregex(String packageregex) {
-        if (packageregex == null) throw new NullPointerException();
-        this.packageregex = packageregex;
-    }
-
-    public void setPackagereplace(String packagereplace) {
-        if (packagereplace == null) throw new NullPointerException();
-        this.packagereplace = packagereplace;
-    }
-
-    /**
-     * Directory where generated file should be created
+     * Assert method. (Helper method for templates).
      *
-     * @generama.property required="true"
+     * @param message   failure message.
+     * @param predicate should be true to avoid an exception.
      */
-    public void setDestdir(String destdir) {
-        if (destdir == null) throw new NullPointerException();
-        this.destdir = new File(destdir);
+    public void assertTrue(String message, boolean predicate) {
+        if (!predicate) {
+            throw new RuntimeException(message);
+        }
+    }
+
+    public Map getContextObjects() {
+        return contextObjects;
     }
 
     public File getDestdirFile() {
         return destdir;
     }
 
-    /**
-     * Validate output files or not.
-     *
-     * @generama.property required="false" default="true"
-     */
-    public void setValidate(boolean validate) {
-        this.validate = validate;
-    }
-
-    public boolean isValidate() {
-        return validate;
-    }
-
-    /**
-     * Encoding of source files
-     *
-     * @generama.property required="false" default="ISO-8859-1"
-     */
-    public void setEncoding(String encoding) {
-        if (encoding == null) throw new NullPointerException();
-        this.encoding = encoding;
-    }
-
-    public String getEncoding() {
-        return encoding;
+    public String getDestinationFilename(Object metadata) {
+        String originalFilename = metadataProvider.getOriginalFileName(metadata);
+        String result = originalFilename.replaceAll(fileregex, filereplace);
+        return result;
     }
 
     public String getDestinationPackage(Object metadata) {
@@ -131,13 +79,28 @@ public abstract class Plugin implements Startable {
         return originalPackage.replaceAll(packageregex, packagereplace);
     }
 
-    public String getDestinationFilename(Object metadata) {
-        String originalFilename = metadataProvider.getOriginalFileName(metadata);
-        String result = originalFilename.replaceAll(fileregex, filereplace);
-        return result;
+    public String getEncoding() {
+        return encoding;
     }
 
+    public String getMergedir() {
+		return mergedir;
+	}
+
     /**
+     * So that subclasses can choose what kind of metadata they want to use.
+     */
+    abstract protected Collection getMetadata();
+
+    public OutputValidator getOutputValidator() {
+        return outputValidator;
+    }
+
+	protected WriterMapper getWriterMapper() {
+        return writerMapper;
+    }
+
+	/**
      * Tests if an array is null or empty. (Helper method for templates).
      *
      * @param array an array
@@ -169,20 +132,104 @@ public abstract class Plugin implements Startable {
         return isIn(new File(file), new File(directory));
     }
 
-    /**
-     * Assert method. (Helper method for templates).
-     *
-     * @param message   failure message.
-     * @param predicate should be true to avoid an exception.
-     */
-    public void assertTrue(String message, boolean predicate) {
-        if (!predicate) {
-            throw new RuntimeException(message);
-        }
+    public boolean isMultioutput() {
+        return isMultioutput;
     }
 
-    public Map getContextObjects() {
-        return contextObjects;
+    public boolean isValidate() {
+        return validate;
+    }
+
+    protected void populateContextMap(Map map) {
+        map.put("class", map.get("metadata"));
+        map.put("plugin", this);
+        map.put("dontedit", Plugin.DONTEDIT);
+    }
+
+    /**
+     * A method called right before generation is called (one time if multiOutput is false, several otherwise).
+     * Allows for late setting of directorios for example in MergeableVelocityTemplateEngine
+     *
+     * @see MergeableVelocityTemplateEngine#addPath(String)
+     */
+    protected void preGenerate() {
+        // Default impl is empty
+    }
+
+    /**
+     * Directory where generated file should be created
+     *
+     * @generama.property required="true"
+     */
+    public void setDestdir(String destdir) {
+        if (destdir == null) throw new NullPointerException();
+        this.destdir = new File(destdir);
+    }
+
+    /**
+     * Encoding of source files
+     *
+     * @generama.property required="false" default="ISO-8859-1"
+     */
+    public void setEncoding(String encoding) {
+        if (encoding == null) throw new NullPointerException();
+        this.encoding = encoding;
+    }
+
+    /**
+     * @param fileregex a regular expression indicating what parts of each metadata object's file name
+     * should be replaced in the output file.
+     */
+    public void setFileregex(String fileregex) {
+        if (fileregex == null) throw new NullPointerException();
+        this.fileregex = fileregex;
+    }
+
+    public void setFilereplace(String filereplace) {
+        if (filereplace == null) throw new NullPointerException();
+        this.filereplace = filereplace;
+    }
+
+    /**
+     * directory containing foles to merge into generated output.
+     * information about available merge points is provided in 
+     * plugin documentation and generated files
+     *  
+     * @generama.property
+     * @param mergedir
+     */
+    public void setMergedir(String mergedir) {
+		this.mergedir = mergedir;
+	}
+
+    public void setMultioutput(boolean multioutput) {
+        isMultioutput = multioutput;
+    }
+
+    public void setOutputValidator(OutputValidator outputValidator) {
+        this.outputValidator = outputValidator;
+    }
+
+    public void setPackageregex(String packageregex) {
+        if (packageregex == null) throw new NullPointerException();
+        this.packageregex = packageregex;
+    }
+
+    public void setPackagereplace(String packagereplace) {
+        if (packagereplace == null) throw new NullPointerException();
+        this.packagereplace = packagereplace;
+    }
+    
+    /**
+     * Validate output files or not.
+     *
+     * @generama.property required="false" default="true"
+     */
+    public void setValidate(boolean validate) {
+        this.validate = validate;
+    }
+    public boolean shouldGenerate(Object metadata) {
+        return true;
     }
 
     public void start() {
@@ -244,37 +291,7 @@ public abstract class Plugin implements Startable {
         }
     }
 
-    /**
-     * So that subclasses can choose what kind of metadata they want to use.
-     */
-    abstract protected Collection getMetadata();
-
-    protected void populateContextMap(Map map) {
-        map.put("class", map.get("metadata"));
-        map.put("plugin", this);
-        map.put("dontedit", Plugin.DONTEDIT);
-    }
-    
-    /**
-     * A method called right before generation is called (one time if multiOutput is false, several otherwise).
-     * Allows for late setting of directorios for example in MergeableVelocityTemplateEngine
-     *
-     * @see MergeableVelocityTemplateEngine#addPath(String)
-     */
-    protected void preGenerate() {
-        // Default impl is empty
-    }
     public void stop() {
 //    	 Default impl is empty
-    }
-
-    protected WriterMapper getWriterMapper() {
-        return writerMapper;
-    }
-
-    public static String getPackageName(Class pluginClass) {
-        String className = pluginClass.getName();
-        String packageName = className.substring(0, className.lastIndexOf('.'));
-        return packageName;
     }
 }

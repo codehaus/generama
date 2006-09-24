@@ -1,7 +1,14 @@
-<j:jelly xmlns:j="jelly:core">
+<?xml version="1.0" encoding="UTF-8"?>
+<j:jelly xmlns:j="jelly:core"   xmlns:g="jelly:org.generama.jelly.GeneramaTaglib">
   <test>
     <j:forEach var="pip" items="${metadata}">
       <number name="${pip}"/>
     </j:forEach>
-  </test>
+    <g:merge file="include.jelly"/>
+    <g:merge file="nonesuchfile.jelly">
+        <glum>
+            sustitute for merged stuff
+        </glum>
+    </g:merge>
+    </test>
 </j:jelly>

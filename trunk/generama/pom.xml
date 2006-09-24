@@ -246,7 +246,7 @@
         </repository>
         <!-- apache repository holding jelly etc -->
         <repository>
-            <id>apache</id>
+            <id>apache-legacy</id>
             <name>Apache repository</name>
             <layout>legacy</layout>
             <url>http://cvs.apache.org/repository/</url>
@@ -260,11 +260,5 @@
             <url>dav:https://dav.codehaus.org/dist</url>
             <layout>legacy</layout>
         </repository>
-        <!--
-        <site>
-            <id>generama-site</id>
-            <url>dav:https://dav.codehaus.org/generama</url>
-        </site>
-        -->
     </distributionManagement>
 </project>

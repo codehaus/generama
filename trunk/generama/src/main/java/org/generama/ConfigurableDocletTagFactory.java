@@ -23,7 +23,7 @@ import java.net.URL;
  * It is possible to register a tag by class, so that tags with a
  * particular name will be of a particular class. It is also possible
  * to register tags simply by name, and they will be of the default type.
- *
+ * TODO:prevent output of multiple tag warning on the sameline
  * @author Aslak Helles&oslash;y
  * @version $Revision$
  */
