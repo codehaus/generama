@@ -227,10 +227,11 @@
             <version>1.0.0</version>
         </dependency>
         <dependency>
-            <groupId>generama</groupId>
+            <groupId>qdox</groupId>
             <artifactId>qdox</artifactId>
-            <version>20051211.114207</version>
+            <version>1.6.1</version>
         </dependency>
+
     </dependencies>
     <repositories>
         <repository>
