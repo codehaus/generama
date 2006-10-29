@@ -51,11 +51,12 @@ public class MergeTag extends TagSupport {
 
 		try {
 			Plugin plugin = (Plugin) context.getVariable("plugin");
-			String mergefile =plugin.getMergedir() + file;
-			output.writeComment("start merging from source:"
+			String mergefile = (plugin.getMergedir() != null?  plugin.getMergedir() : "<undefined merge dir>/") + file;
+			output.writeComment("start merging from source: "
 					+ mergefile);
 			InputStream is = context.getResourceAsStream(plugin.getMergedir()
 					+ file);
+            //        System.err.println("************* input stream for merging: " + is);
 			if (is != null) {
 				log.info("Merging file " + file.toString());
 				context.runScript(new InputSource(is), output, true,
@@ -64,7 +65,7 @@ public class MergeTag extends TagSupport {
 				//output.writeComment(getBodyText());
 				getBody().run(context,output);
 			}
-			output.writeComment("end merging from source:"
+			output.writeComment("end merging from source: "
 					+ mergefile);
 		} catch (JellyException e) {
 			throw new JellyTagException("could not import script", e);
