@@ -4,7 +4,7 @@
     <groupId>generama</groupId>
     <artifactId>generama</artifactId>
     <name>Generama</name>
-    <version>1.2.3</version>
+    <version>1.2.4-SNAPSHOT</version>
     <description>Code generation framework</description>
     <url>http://xdoclet.codehaus.org/generama/</url>
     <issueManagement>
@@ -50,8 +50,7 @@
     </contributors>
     <scm>
         <connection>scm:cvs:pserver:anonymous@cvs.generama.codehaus.org:/home/projects/generama/scm:generama</connection>
-        <developerConnection>scm:cvs:ext:${user.name}@cvs.generama.codehaus.org:/home/projects/generama/scm:generama</developerConnection>
-    <tag>GENERAMA_1_2_3</tag>
+        <developerConnection>scm:cvs:ext:ko5tik@cvs.generama.codehaus.org:/home/projects/generama/scm:generama</developerConnection>
   </scm>
     <organization>
         <name>Generama</name>
