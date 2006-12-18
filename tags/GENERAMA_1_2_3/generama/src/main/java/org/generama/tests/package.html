@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+</head>
+<body>
+<p>
+This package contains abstract JUnit TesCase classes that should
+be used to Test Driven Develop (TDD) new plugins.
+</p>
+<p>
+Depending on what kind of output is generated, the following test
+cases should be extended:
+</p>
+<table BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0">
+  <tr BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+    <th><FONT SIZE="+2"><B>Type of generated output</B></FONT></th>
+    <th><FONT SIZE="+2"><B>TestCase to extend</B></FONT></th>
+    <th><FONT SIZE="+2"><B>Plugin to extend</B></FONT></th>
+  </tr>
+  <tr BGCOLOR="white" CLASS="TableRowColor">
+    <td>Java sources</td>
+    <td><B><a href="AbstractJavaGeneratingPluginTestCase.html">AbstractJavaGeneratingPluginTestCase</a></B></td>
+    <td><B><a href="../VelocityPlugin.html">VelocityPlugin</a></B></td>
+  </tr>
+  <tr BGCOLOR="white" CLASS="TableRowColor">
+    <td>XML files</td>
+    <td><B><a href="AbstractXMLGeneratingPluginTestCase.html">AbstractXMLGeneratingPluginTestCase</a></B></td>
+    <td><B><a href="../JellyPlugin.html">JellyPlugin</a></B></td>
+  </tr>
+  <tr BGCOLOR="white" CLASS="TableRowColor">
+    <td>Text files</td>
+    <td><B><a href="AbstractTextGeneratingPluginTestCase.html">AbstractTextGeneratingPluginTestCase</a></B></td>
+    <td><B><a href="../VelocityPlugin.html">VelocityPlugin</a></B></td>
+  </tr>
+</table>
+<p>
+(Although JellyPlugin is recommended for generation of XML, it is possible to generate XML with VelocityPlugin subclasses.
+In that case, you should use <a href="AbstractXMLGeneratingPluginTestCase.html">AbstractXMLGeneratingPluginTestCase</a>
+to test the output.)
+</p>
+</body>
+</html>

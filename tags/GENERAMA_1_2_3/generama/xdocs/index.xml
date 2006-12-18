@@ -1,0 +1,139 @@
+<?xml version="1.0"?>
+<document>
+
+  <properties>
+    <title>Generama</title>
+    <author email="aslak at thoughtworks dot net">Aslak Hellesoy</author>
+  </properties>
+
+  <body>
+    <section name="Generama">
+      <p>
+        Generama is a small framework for generating arbitrary files. It
+        is a thin abstraction layer around Velocity and Jelly with a plugin
+        framework.
+      </p>
+    </section>
+    <section name="In A Nutshell">
+      <p>
+        The Generama API consists of four core concepts. 
+      </p>
+      <p> 
+        Firstly, there is the Generama class, which serves as an entry point. The Generama 
+        framework is invoked via this class.
+      </p>
+      <p>
+        Secondly, there is the Plugin interface, which serves as extension points. 
+        The Plugin interface (currently) has two abstract implementations: VelocityPlugin and
+        JellyPlugin. These are meant to be extended.
+      </p>
+      <p>
+        Third, there is the MetaDataProvider interface. You need to pass one of these to Generama's
+        constructor. Generama will then ask the MetaDataProvider you have provided for its
+        metadata (by calling its getMetaData()) method which returns a Collection. It's entirely up 
+        to the MetaDataProvider implementation what kind of objects are in this Collection.
+        Generama will then invoke each plugin and hand it the metadata. The plugin can then operate
+        on that metadata.
+      </p>
+      <p>
+        Forth, the WriterMapper interface. Its responsability is to provide a Writer object where a certain Plugin
+        should write its output. In the example above, we used the StandardOutMapper, which is really
+        just a dummy implementation that writes to standard out. In the real world you'd probably write
+        the output somewhere else, typically to some file. In that case you should use the FileMapper,
+        which will write the output to a file.
+      </p>
+    </section>
+
+    <section name="A short example">
+      <p>
+        Imagine you want to use Velocity to generate a Comma Separated Value (CSV) file containing
+        rows from some database table.
+      </p>
+      <p>
+        First you need to feed Generama with some metadata. -The data in your table.
+        You'd have to write an implementation of MetadataProvider that connects to a database
+        and returns a Collection of objects representing a row.
+      </p>
+      <source>
+        public class CustomerTableMetadataProvider implements MetadataProvider {
+            public Collection createMetadata() {
+                Connection connection = ...
+                ResultSet rs = ...
+                List result = new ArrayList();
+                while(rs.next()) {
+                    List row = new ArrayList();
+                    row.add(rs.getString("NAME"));
+                    row.add(rs.getString("ADDRESS"));
+                    row.add(rs.getString("BIRTH"));
+                    result.add(row);
+                }
+                return result;
+            }
+        }
+      </source>
+      <p>
+        Now that you have a way to retrieve the metadata, you must write a Velocity template to
+        operate on that data:
+      </p>
+      <source>
+        #forEach( $row in $metadata )
+        $row.get(0),$row.get(1),$row.get(2)
+        #end
+      </source>
+      <p>
+        As you see, your Velocity template has to know what kind of objects to find inside the $metadata
+        variable. In this case, it expects each element to be another Collection, so it can call get(int)
+        on it.
+      </p>
+      <p>
+        Finally you must write a plugin that you can register with Generama:
+      </p>
+      <source>
+        public class CustomerTablePlugin extends VelocityPlugin {
+            public CustomerTablePlugin(VelocityComponent velocityComponent
+                                       Generama generama,
+                                       WriterMapper writerMapper) {
+                super(velocityComponent);
+                generama.addPlugin(this, writerMapper);
+            }
+        }
+      </source>
+      <p>
+        It is important to follow this coding pattern for plugins: Taking a <code>Generama</code> 
+        and <code>WriterMapper</code> in the constructor and do the <code>addPlugin</code> call in 
+        the constructor. This makes it possible to use Generama in an environment that is based on
+        <a href="http://www.picocontainer.org/">PicoContainer</a>, such as the Generama Ant task 
+        or its various (not yet written) IDE plugins.
+      </p>
+      <p>
+        There is nothing more you have to do in the plugin class. Except for giving the
+        Velocity template the same base name as the plugin class - CustomerTablePlugin.vm.
+        (For Plugin classes extending JellyPlugin, the Jelly script extension has to end with
+        .jelly instead).
+      </p>
+      <p>
+        The last step is to lace everything up. You must register the plugin:
+      </p>
+      <source>
+        Generama generama = new Generama();
+        CustomerTablePlugin plugin = new CustomerTablePlugin();
+        generama.addPlugin(plugin, new StandardOutMapper());
+        generama.execute();
+      </source>
+      <p>
+        Basically what the Ant task does is to do this lacing using PicoContainer, and relying
+        on plugins to be implemented following the pattern above.
+      </p>
+      <p>
+        The plugin above will generate content that looks like the following (provided there are some rows in
+        the database table).
+      </p>
+      <source>
+        Aslak,London,1971.28.02
+        Ara,Teheran,1975.23.06
+      </source>
+
+    </section>
+  </body>
+  
+</document>
