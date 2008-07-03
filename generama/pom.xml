@@ -49,9 +49,9 @@
         </contributor>
     </contributors>
     <scm>
-        <connection>scm:cvs:pserver:anonymous@cvs.generama.codehaus.org:/home/projects/generama/scm:generama</connection>
-        <developerConnection>scm:cvs:ext:ko5tik@cvs.generama.codehaus.org:/home/projects/generama/scm:generama</developerConnection>
-  </scm>
+        <connection>scm:svn:http://svn.codehaus.org/generama/trunk/generama/</connection>
+        <developerConnection>scm:svn:https://svn.codehaus.org/generama/trunk/generama/</developerConnection>
+    </scm>
     <organization>
         <name>Generama</name>
         <url>http://generama.codehaus.org/</url>
@@ -128,7 +128,7 @@
             </plugin>
         </plugins>
         <extensions>
-           <extension>
+            <extension>
                 <groupId>org.apache.maven.wagon</groupId>
                 <artifactId>wagon-webdav</artifactId>
                 <version>1.0-beta-2</version>
@@ -263,11 +263,14 @@
     </repositories>
     <distributionManagement>
         <repository>
-            <uniqueVersion>false</uniqueVersion>
-            <id>codehaus-legacy</id>
-            <name>XDoclet central repository on codehaus</name>
-            <url>dav:https://dav.codehaus.org/dist</url>
-            <layout>legacy</layout>
+            <id>codehaus.org</id>
+            <name>Codehaus PicoContainer Repository</name>
+            <url>dav:https://dav.codehaus.org/repository/xdoclet</url>
         </repository>
+        <snapshotRepository>
+            <id>codehaus.org</id>
+            <name>Codehaus PicoContainer Snapshot Repository</name>
+            <url>dav:https://dav.codehaus.org/snapshots.repository/xdoclet</url>
+        </snapshotRepository>
     </distributionManagement>
 </project>
