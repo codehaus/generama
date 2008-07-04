@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>generama</groupId>
+    <groupId>org.codehaus.generama</groupId>
     <artifactId>generama</artifactId>
     <name>Generama</name>
     <version>1.2.4-SNAPSHOT</version>
@@ -228,49 +228,56 @@
         </dependency>
         <!--
             dependency is downgraded back again pending resolution of QDOX-105
+            -->
         <dependency>
-            <groupId>qdox</groupId>
+            <groupId>com.thoughtworks.qdox</groupId>
             <artifactId>qdox</artifactId>
-            <version>1.6.1</version>
+            <version>1.7-SNAPSHOT</version>
         </dependency> 
-        -->
+       <!--
         <dependency>
             <groupId>generama</groupId>
             <artifactId>qdox</artifactId>
             <version>20051211.114207</version>
         </dependency>
-
+              -->
     </dependencies>
     <repositories>
+        <!--
         <repository>
             <id>dist.codehaus.org</id>
             <layout>legacy</layout>
             <url>http://dist.codehaus.org</url>
         </repository>
+        -->
         <!-- wagon dav to be found here -->
+        <!--
         <repository>
             <id>apache-snapshots</id>
             <name>Snapshot repository</name>
             <url>http://people.apache.org/maven-snapshot-repository/</url>
         </repository>
+        -->
         <!-- apache repository holding jelly etc -->
+        <!--
         <repository>
             <id>apache-legacy</id>
             <name>Apache repository</name>
             <layout>legacy</layout>
             <url>http://cvs.apache.org/repository/</url>
         </repository>
+            -->
     </repositories>
     <distributionManagement>
         <repository>
             <id>codehaus.org</id>
-            <name>Codehaus PicoContainer Repository</name>
-            <url>dav:https://dav.codehaus.org/repository/xdoclet</url>
+            <name>Codehaus  Repository</name>
+            <url>dav:https://dav.codehaus.org/repository/generama</url>
         </repository>
         <snapshotRepository>
             <id>codehaus.org</id>
-            <name>Codehaus PicoContainer Snapshot Repository</name>
-            <url>dav:https://dav.codehaus.org/snapshots.repository/xdoclet</url>
+            <name>Codehaus  Snapshot Repository</name>
+            <url>dav:https://dav.codehaus.org/snapshots.repository/generama</url>
         </snapshotRepository>
     </distributionManagement>
 </project>
