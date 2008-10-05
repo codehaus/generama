@@ -108,7 +108,7 @@ public class ConditionalElementTagTestCase extends TestCase {
         xmlOutput.flush();
 
         Diff diff = new Diff(expectedResult, sw.toString());
-        XMLTestCase xmlunit = new XMLTestCase(this.getName());
+        XMLTestCase xmlunit = new XMLTestCase(this.getName()){};
         xmlunit.assertXMLIdentical(diff, true);
     }
 
