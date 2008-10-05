@@ -41,7 +41,8 @@ public abstract class AbstractXMLGeneratingPluginTestCase extends AbstractPlugin
                 return super.differenceFound(difference);
             }
         };
-        XMLTestCase xmlunit = new XMLTestCase(getName());
+        // go for anonym inner
+        XMLTestCase xmlunit = new XMLTestCase(getName()){};
 
         xmlunit.assertXMLIdentical(diff, true);
     }
