@@ -1,15 +1,12 @@
 package org.generama;
 
+import freemarker.cache.ClassTemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.io.Writer;
-import java.net.URL;
 import java.util.Map;
 
 /**
@@ -17,12 +14,17 @@ import java.util.Map;
  * @version $Revision$
  */
 public class FreeMarkerTemplateEngine extends AbstractTemplateEngine {
+    private final Configuration cfg;
+
+    public FreeMarkerTemplateEngine() {
+        this.cfg = new Configuration();
+        cfg.setTemplateLoader(new ClassTemplateLoader(FreeMarkerTemplateEngine.class, "/"));
+    }
+
     public void generate(Writer out, Map contextObjects, String encoding, Class pluginClass) {
-        URL url = getScriptURL(pluginClass, ".ftl");
         try {
-            InputStream scriptStream = url.openStream();
-            Reader reader = new InputStreamReader(scriptStream);
-            Template template = new Template(url.toExternalForm(), reader, Configuration.getDefaultConfiguration(), encoding);
+            final String scriptPath = getScriptPath(pluginClass, ".ftl");
+            final Template template = cfg.getTemplate(scriptPath, encoding);
             template.process(contextObjects, out);
             out.flush();
         } catch (IOException e) {
