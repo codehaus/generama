@@ -57,6 +57,9 @@
         <name>Generama</name>
         <url>http://generama.codehaus.org/</url>
     </organization>
+    <prerequisites>
+        <maven>2.0.9</maven>
+    </prerequisites>
     <build>
         <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
         <testSourceDirectory>${basedir}/src/test/java</testSourceDirectory>
