@@ -2,7 +2,7 @@ package org.generama;
 
 import com.thoughtworks.qdox.model.DefaultDocletTag;
 import com.thoughtworks.qdox.model.DocletTag;
-import com.thoughtworks.qdox.model.AbstractJavaEntity;
+import com.thoughtworks.qdox.model.AbstractBaseJavaEntity;
 import junit.framework.TestCase;
 
 import java.util.List;
@@ -30,7 +30,7 @@ public class ConfigurableDocletTagFactoryTestCase extends TestCase {
     }
 
     public static class SpecialTag extends DefaultDocletTag {
-        public SpecialTag(String name, String value, AbstractJavaEntity context, int lineNumber) {
+        public SpecialTag(String name, String value, AbstractBaseJavaEntity context, int lineNumber) {
             super(name, value, context, lineNumber);
         }
     }
