@@ -46,6 +46,6 @@ public class MergeableVelocityPluginTestCase extends AbstractXMLGeneratingPlugin
     protected URL getExpected() throws Exception {
         String path;
         assertNotNull(path = System.getProperty("basedir"));
-        return new File(path, "project.xml").toURL();
+        return new File(path, "pom.xml").toURL();
     }
 }
