@@ -1,0 +1,3 @@
+<j:jelly mlns:j="jelly:core">
+<yo>This is from a merge file outside the plugin</yo>
+</j:jelly>
